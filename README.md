@@ -4,7 +4,7 @@ vim8
 python3  
 
 ```bash
-$ brew install vim --with-python --with-lua
+$ brew install vim --with-python3 --with-lua
 $ brew install python3
 ```
 
