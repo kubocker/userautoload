@@ -16,7 +16,7 @@ endpython3
 endfunction
 
 
-"py3file <sfile>:h:h/src/hello.py
+py3file <sfile>:h:h/userautoload/src/hello.py
 
 
 function! Go(type)
@@ -26,10 +26,15 @@ python3 << endpython3
 import django
 import sys
 import vim
+
 print(django.get_version())
 var = vim.eval("l:type")
 print("calling ui - " + var)
-#hello_hello(var)
+go = GoRiver()
+go.position()
+print(go.x)
+print(go.y)
+print(go.goal())
 endpython3
 endfunction
 
