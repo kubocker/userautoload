@@ -27,7 +27,7 @@ import django
 import sys
 import vim
 
-print(django.get_version())
+print("django version is: {0}".format(django.get_version()))
 var = vim.eval("l:type")
 print("calling ui - " + var)
 go = GoRiver()
@@ -39,3 +39,25 @@ endpython3
 endfunction
 
 command! -nargs=* Go :call Go(<f-args>)
+
+
+
+
+function! Todo()
+    echo "loading..."
+python3 << endpython3
+import requests
+response = requests.get(
+    "http://127.0.0.1:8000/todo/title/",
+    params={})
+json = response.json()
+date = json[0]['date']
+title = json[0]['title']
+for key in json:
+    print(key["title"])
+endpython3
+endfunction
+
+
+command! Todo :call Todo()
+
