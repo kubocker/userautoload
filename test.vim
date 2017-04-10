@@ -23,8 +23,10 @@ function! Go(type)
     echo "loading..."
     let l:type=a:type
 python3 << endpython3
+import django
 import sys
 import vim
+print(django.get_version())
 var = vim.eval("l:type")
 print("calling ui - " + var)
 #hello_hello(var)
