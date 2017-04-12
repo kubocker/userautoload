@@ -16,7 +16,7 @@ endpython3
 endfunction
 
 
-py3file <sfile>:h:h/userautoload/src/hello.py
+"py3file <sfile>:h:h/userautoload/src/hello.py
 
 
 function! Go(type)
@@ -24,6 +24,7 @@ function! Go(type)
     let l:type=a:type
 python3 << endpython3
 import django
+import PyQt5
 import sys
 import vim
 
