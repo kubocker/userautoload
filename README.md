@@ -8,6 +8,8 @@ python3
 ```bash
 $ brew install vim --with-python3 --with-lua
 $ brew install python3
+$ pip install pip-tools
+$ pip-compile requirements.in
 ```
 
 or
