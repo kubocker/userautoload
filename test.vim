@@ -31,11 +31,6 @@ import vim
 print("django version is: {0}".format(django.get_version()))
 var = vim.eval("l:type")
 print("calling ui - " + var)
-go = GoRiver()
-go.position()
-print(go.x)
-print(go.y)
-print(go.goal())
 endpython3
 endfunction
 
