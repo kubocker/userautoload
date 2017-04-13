@@ -2,7 +2,8 @@
 let g:kbk#speed_base_path = base_path . "speed"
 
 "py3file ~/Develop/kubocker/speed/app.py
-"
+
+let g:type_list = ["todo", "memo", "diary"]
 
 function! SpeedTodo()
 python3 << endpython3
@@ -41,12 +42,14 @@ function! Kbk(type, json, date)
     let l:type=a:type
     let l:json=a:json
     let l:date=a:date
-    if l:type == "todo"
-        echo "おおおおおおおおおおおおおおお"
-        call SpeedTodo()
-    else
-        echo "aaaaaaaaaaaaaaaaaaaaaa"
-    endif
+    let l:list=g:type_list
+    for item in list
+        if l:type == item
+            echo "ここここ"
+            echo item
+            call SpeedTodo()
+        endif
+    endfor
 python3 << endpython3
 import vim
 
