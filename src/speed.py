@@ -15,16 +15,32 @@ class SpeedModel(object):
     url = property(get_url, set_url, del_url, "url property")
 
 
+
 class Todo(SpeedModel):
+    '''
+    Todo:
+    '''
     def __init__(self):
+        pass
+
+    def get_list(self, date):
         pass
 
 
 class Memo(SpeedModel):
+    '''
+    Memo:
+    '''
     def __init__(self):
         pass
 
 
 class Diary(SpeedModel):
+    '''
+    Diary:
+    '''
     def __init__(self):
         pass
+
+
+
