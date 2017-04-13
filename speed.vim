@@ -17,11 +17,7 @@ d = datetime.datetime.today()
 print("{0}-{1}-{2}: todo is...".format(d.year, d.month, d.day))
 print('タスク | 概要                   | 開始時刻 | 終了時刻 |')
 for key in json:
-    check = '[]'
-    if key['complete'] is True:
-        check = '[x]'
-    else:
-        check = '[ ]'
+    check = '[x]' if key['complete'] else '[ ]'
     print('{0} - {1}'.format(check, key['title']))
 endpython3
 endfunction
@@ -39,3 +35,37 @@ endpython3
 endfunction
 
 command! SpeedTodo :call Go#SpeedTodo()
+
+
+function! Kbk(type, json, date)
+    let l:type=a:type
+    let l:json=a:json
+    let l:date=a:date
+python3 << endpython3
+import vim
+
+test = vim.eval("l:type")
+json = vim.eval("l:json")
+date = vim.eval("l:date")
+print(test)
+print(json)
+print(date)
+
+endpython3
+endfunction
+
+command! -nargs=* Kbk : call Kbk(<f-args>)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
