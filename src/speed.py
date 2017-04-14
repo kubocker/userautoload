@@ -16,6 +16,18 @@ class Speed(object):
 
     url = property(get_url, set_url, del_url, "url property")
 
+    def get_date(self, date):
+        import datetime
+        if date == "today":
+            return datetime.datetime.today()
+        elif date == "yesturday":
+            return datetime.datetime.today() - datetime.timedelta(days=1)
+        else:
+            return datetime.datetime.today() + datetime.timedelta(days=1)
+
+    def set_path(self):
+        pass
+
     def get_json(self, param, path, params={}):
         import requests
         response = requests.get(
@@ -50,8 +62,6 @@ class Todo(Speed):
 
     def get_json(self, param, path, params={}):
         super(Todo, self).get_json(param, path, params)
-        print("ooooooooooooooooooooooooooooooooooooooooooooooo")
-        print(self.json2)
 
 
 class Memo(Speed):

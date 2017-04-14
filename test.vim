@@ -19,22 +19,22 @@ endfunction
 "py3file <sfile>:h:h/userautoload/src/hello.py
 
 
-function! Go(type)
-    echo "loading..."
-    let l:type=a:type
-python3 << endpython3
-import django
-import PyQt5
-import sys
-import vim
-
-print("django version is: {0}".format(django.get_version()))
-var = vim.eval("l:type")
-print("calling ui - " + var)
-endpython3
-endfunction
-
-command! -nargs=* Go :call Go(<f-args>)
+"function! Go(type)
+"    echo "loading..."
+"    let l:type=a:type
+"python3 << endpython3
+"import django
+"import PyQt5
+"import sys
+"import vim
+"
+"print("django version is: {0}".format(django.get_version()))
+"var = vim.eval("l:type")
+"print("calling ui - " + var)
+"endpython3
+"endfunction
+"
+"command! -nargs=* Go :call Go(<f-args>)
 
 
 

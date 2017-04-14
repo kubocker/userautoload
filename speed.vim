@@ -7,6 +7,7 @@ py3file <sfile>:h:h/userautoload/src/speed.py
 let g:type_list = ["todo", "memo", "diary"]
 let g:speed_url = "http://127.0.0.1:8000/"
 
+
 function! SpeedTodo(type, request, date)
     let l:type=a:type
     let l:json=a:request
@@ -32,7 +33,11 @@ todo.get_json(test, todo.path)
 print(todo.json)
 todo.get_list(date)
 d = datetime.datetime.today()
+d2 = datetime.datetime.today() + datetime.timedelta(days=1)
+d3 = datetime.datetime.today() - datetime.timedelta(days=1)
 print("{0}-{1}-{2}: todo is...".format(d.year, d.month, d.day))
+print("{0}-{1}-{2}: tomorrow is...".format(d2.year, d2.month, d2.day))
+print("{0}-{1}-{2}: yesterday is...".format(d3.year, d3.month, d3.day))
 print('タスク | 概要                   | 開始時刻 | 終了時刻 |')
 for key in todo.json:
     time.sleep(0.2)
@@ -55,16 +60,28 @@ endfunction
 
 command! SpeedTodo :call Go#SpeedTodo()
 
+function! DoSpeedUp(type, ...)
+    if a:type == "todo"
+        call SpeedTodo(a:1, a:2, a:3)
+    elseif a:type == "memo"
+        call SpeedMemo(a:000)
+    else
+        call SpeedDiary(a:1, a:2, a:3)
+    endif
+endfunction
 
-function! Kbk(type, json, date)
+
+function! Go(type, param, date, data)
 
     let l:type=a:type
-    let l:json=a:json
+    let l:param=a:param
     let l:date=a:date
+    let l:data=a:data
     let l:list=g:type_list
     for item in list
         if l:type == item
-            call SpeedTodo(type, json, date)
+            "call SpeedTodo(type, json, date)
+            call DoSpeedUp(type, param, date, data)
         endif
     endfor
 python3 << endpython3
@@ -72,6 +89,6 @@ python3 << endpython3
 endpython3
 endfunction
 
-command! -nargs=* Kbk : call Kbk(<f-args>)
+command! -nargs=* Go : call Go(<f-args>)
 
 
