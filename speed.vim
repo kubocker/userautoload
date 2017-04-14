@@ -2,14 +2,25 @@
 let g:kbk#speed_base_path = base_path . "speed"
 
 "py3file ~/Develop/kubocker/speed/app.py
+py3file <sfile>:h:h/userautoload/src/speed.py
 
 let g:type_list = ["todo", "memo", "diary"]
 
-function! SpeedTodo()
+function! SpeedTodo(type, request, date)
+    let l:type=a:type
+    let l:json=a:request
+    let l:date=a:date
+
 python3 << endpython3
 import vim
 import datetime
 import requests
+test = vim.eval("l:type")
+json = vim.eval("l:json")
+date = vim.eval("l:date")
+todo = Todo()
+todo.request(test)
+todo.get_list(date)
 response = requests.get(
     "http://127.0.0.1:8000/todo/title/",
     params={})
@@ -39,26 +50,17 @@ command! SpeedTodo :call Go#SpeedTodo()
 
 
 function! Kbk(type, json, date)
+
     let l:type=a:type
     let l:json=a:json
     let l:date=a:date
     let l:list=g:type_list
     for item in list
         if l:type == item
-            echo "ここここ"
-            echo item
-            call SpeedTodo()
+            call SpeedTodo(type, json, date)
         endif
     endfor
 python3 << endpython3
-import vim
-
-test = vim.eval("l:type")
-json = vim.eval("l:json")
-date = vim.eval("l:date")
-print(test)
-print(json)
-print(date)
 
 endpython3
 endfunction
