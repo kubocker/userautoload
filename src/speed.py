@@ -8,21 +8,28 @@ class Speed(object):
     def get_url(self):
         return self._url
 
-    def set_url(self):
+    def set_url(self, url):
         self._url = url
 
     def del_url(self):
         del self._urlA
 
-    def get_json(self, type, parms={}):
-        import requests
-        response = requests.get("{0}/{1}")
-
     url = property(get_url, set_url, del_url, "url property")
 
-    def request(self, type):
+    def get_json(self, param, path, params={}):
         import requests
-        #reponse = requests.get("{0}/{1}".format(self.url, type), {})
+        response = requests.get(
+                self.url + path,
+                params)
+        self.json2 = response.json()
+
+    def request(self, type, params={}):
+        import requests
+        response = requests.get(
+                "http://127.0.0.1:8000/todo/title",
+                params)
+        self.json = response.json()
+         
 
 
 
@@ -30,16 +37,21 @@ class Todo(Speed):
     '''
     Todo:
     '''
+    base_url = "todo/"
+
     def __init__(self):
         print("this is todo...")
 
     def get_list(self, date="today"):
         pass
 
-    def get_json(self, type, params={}):
-        pass
+    def set_path(self, path):
+        self.path = self.base_url + path
 
-
+    def get_json(self, param, path, params={}):
+        super(Todo, self).get_json(param, path, params)
+        print("ooooooooooooooooooooooooooooooooooooooooooooooo")
+        print(self.json2)
 
 
 class Memo(Speed):

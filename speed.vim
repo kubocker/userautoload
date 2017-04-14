@@ -5,30 +5,37 @@ let g:kbk#speed_base_path = base_path . "speed"
 py3file <sfile>:h:h/userautoload/src/speed.py
 
 let g:type_list = ["todo", "memo", "diary"]
+let g:speed_url = "http://127.0.0.1:8000/"
 
 function! SpeedTodo(type, request, date)
     let l:type=a:type
     let l:json=a:request
     let l:date=a:date
 
+    let l:param=g:request_param
+    let l:url=g:speed_url
+
 python3 << endpython3
 import vim
 import datetime
-import requests
+import time
 test = vim.eval("l:type")
 json = vim.eval("l:json")
 date = vim.eval("l:date")
+url = vim.eval("l:url")
 todo = Todo()
+todo.url = url
+print(todo.url)
 todo.request(test)
+todo.set_path("title")
+todo.get_json(test, todo.path)
+print(todo.json)
 todo.get_list(date)
-response = requests.get(
-    "http://127.0.0.1:8000/todo/title/",
-    params={})
-json = response.json()
 d = datetime.datetime.today()
 print("{0}-{1}-{2}: todo is...".format(d.year, d.month, d.day))
 print('タスク | 概要                   | 開始時刻 | 終了時刻 |')
-for key in json:
+for key in todo.json:
+    time.sleep(0.2)
     check = '[x]' if key['complete'] else '[ ]'
     print('{0} - {1}'.format(check, key['title']))
 endpython3
