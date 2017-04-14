@@ -57,3 +57,27 @@ endfunction
 
 command! Todo :call Todo()
 
+
+
+function! s:apply(func, ...)
+    return call(a:func, a:000)
+endfunction
+
+
+function! s:print(...)
+    for var in a:000
+        echo var
+    endfor
+endfunction
+
+
+function! s:sum(...)
+    let l:sum = 0
+    for var in a:000
+        let l:sum += var
+    endfor
+    return l:sum
+endfunction
+
+call s:apply("s:print", 0, "hoge", "youtube")
+call s:apply("s:sum", 2, 3, 6, 1)
