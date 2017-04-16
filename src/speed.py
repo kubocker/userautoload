@@ -63,6 +63,9 @@ class Todo(Speed):
     def get_json(self, param, path, params={}):
         super(Todo, self).get_json(param, path, params)
 
+    def setup_ui(self):
+        pass
+
 
 class Memo(Speed):
     '''
