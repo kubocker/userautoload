@@ -8,6 +8,7 @@ let g:type_list = ["todo", "memo", "diary"]
 let g:speed_url = "http://127.0.0.1:8000/"
 
 
+" ---------- Todo ---------- "
 "function! SpeedTodo(type, request, date)
 function! SpeedTodo(...)
     "let l:type=a:type
@@ -50,30 +51,22 @@ for key in todo.json:
 endpython3
 endfunction
 
-function! SpeedMemo()
+" ---------- Memo ---------- "
+function! SpeedMemo(...)
 python3 << endpython3
 print("memo...")
 endpython3
 endfunction
 
-function! SpeedDiary()
+" ---------- Diary ---------- "
+function! SpeedDiary(...)
 python3 << endpython3
 print("diary...")
 endpython3
 endfunction
 
-command! SpeedTodo :call Go#SpeedTodo()
 
-function! DoSpeedUp(type, ...)
-    if a:type == "todo"
-        call SpeedTodo(a:1, a:2, a:3)
-    elseif a:type == "memo"
-        call SpeedMemo(a:000)
-    else
-        call SpeedDiary(a:1, a:2, a:3)
-    endif
-endfunction
-
+" ---------- SpeedUP ---------- "
 function! SpeedUp(type, request, ...)
     if a:type == "todo"
         "call SpeedTodo(a:1, a:2, a:3)
@@ -87,18 +80,20 @@ function! SpeedUp(type, request, ...)
     endif
 endfunction
 
-"function! Go(type, param, date, data)
+" ---------- Go Command ---------- "
 function! Go(type, param, ...)
+"function! Go(...)
 
     let l:type=a:type
     let l:param=a:param
-    "let l:date=a:date
-    "let l:data=a:data
     let l:list=g:type_list
+    let s:help="--help"
+    "if a:type == s:help
+    "    echo 'ヘルプ画面へ....'
+    "    return
+    "endif
     for item in list
         if l:type == item
-            "call SpeedTodo(type, json, date)
-            "call DoSpeedUp(type, param, date, data)
             call SpeedUp(a:type, a:param, a:000)
         endif
     endfor
@@ -108,5 +103,4 @@ endpython3
 endfunction
 
 command! -nargs=* Go : call Go(<f-args>)
-
 
