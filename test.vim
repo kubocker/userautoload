@@ -16,6 +16,24 @@ endpython3
 endfunction
 
 
+let res = webapi#http#get('http://127.0.0.1:8000/youtube/artist/')
+"let res = webapi#http#post('http://127.0.0.1:8000/youtube/artist/', {'name': 'マンコ大好き結成隊', 'foundation_date': '2016-03-13', 'member': 3})
+let content = webapi#json#decode(res.content)
+echo content
+
+echo "speed.vim"
+
+function! s:escarg(s)
+  return escape(substitute(a:s, '\\', '/', 'g'), ' ')
+endfunction
+
+
+let g:todolist_path = "~/Develop/practice"
+let g:todolist_path = expand(g:todolist_path, ':p')
+if !isdirectory(g:todolist_path)
+  call mkdir(g:todolist_path, 'p')
+endif
+
 "py3file <sfile>:h:h/userautoload/src/hello.py
 
 
@@ -54,8 +72,65 @@ for key in json:
 endpython3
 endfunction
 
+function! File()
+echo line('.')
+let l:todo = line('.')
+python3 << endpython3
+import vim
+#f = open("src/hello.py", "r")
+#for l in f:
+#    print(l)
+#f.close()
+#line = f.readline()
+#while line:
+#    line = f.readline()
+#    print(line)
+print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+print(vim.eval("l:todo"))
+print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+f = "src/hello.py"
+line = vim.eval("l:todo")
+test_dict = [
+    {"title": "テスト1テスト1テスト1", "file": "src/hello.py" },
+    {"title": "テスト2テスト2テスト2", "file": "src/todo.py" },
+    {"title": "テスト3テスト3テスト3", "file": "src/memo.py" },
+    {"title": "テスト3テスト3テスト3", "file": "src/diary.py" },
+
+]
+#1print(line)
+#1print(test_dict[1])
+test = int(line)
+print(test)
+#print(test_dict[line])
+print(test_dict[test-1]["file"])
+vim.command("vsp {0}".format(test_dict[test-1]["file"]))
+#vim.command("gf {0}".format(test_dict[test-1]["file"]))
+#print(f)
+endpython3
+endfunction
+
+function! File2()
+python3 << endpython3
+import calendar
+import datetime
+import vim
+
+d = datetime.datetime.today()
+print(d.year)
+print(d.month)
+print(calendar.month(d.year, d.month-1))
+print(calendar.month(d.year, d.month))
+print(calendar.month(d.year, d.month+1))
+#text = input("what days are you want sex??: ")
+#print(text)
+endpython3
+endfunction
+
 
 command! Todo :call Todo()
+command! Test :call File()
+command! Test2 :call File2()
+
 
 
 

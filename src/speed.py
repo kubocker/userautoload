@@ -43,6 +43,12 @@ class Speed(object):
         self.json = response.json()
          
 
+def test_file_open():
+    f = open("hello.py")
+    line = f.readline()
+    while line:
+        line = f.readline()
+    f.close()
 
 
 class Todo(Speed):
