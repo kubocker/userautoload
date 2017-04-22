@@ -17,7 +17,7 @@ or
 
 #### git clone
 ```bash
-$
+$ git clone
 ```
 
 ## 2. set
