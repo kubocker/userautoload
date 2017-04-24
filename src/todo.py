@@ -27,7 +27,8 @@ class Todo(Speed):
 
     def __init__(self, year, month, date):
         super(Todo, self).__init__(year, month, date)
-        from tinydb import TinyDB
+        from tinydb import TinyDB, Query
+        self.query = Query()
         db = TinyDB(self.file_path)
         self.table = db.table("todos")
 
@@ -42,11 +43,10 @@ class Todo(Speed):
 
     def list(self):
         from tinydb import Query
-        item = Query()
-        res = self.table.search(item.date == "{0}日".format(self.date))
-        print("| チェック |  タイトル               ")
+        res = self.table.search(self.query.date == "{0}日".format(self.date))
+        print(" ---- ", "{0}日".format(self.date), " ---- ")
         for it in res:
-            check = '| [x]      |' if it['complete'] else '| [ ]      |'
+            check = '| [x] |' if it['complete'] else '| [ ] |'
             print(check, it['title'])
 
 
