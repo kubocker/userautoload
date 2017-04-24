@@ -1,92 +1,76 @@
 
-import datetime
 
 class Speed(object):
-    def __init__(self, url):
-        self._url = url
+    """
+    class Speed
+    @param  year  - 年
+    @param  month - 月
+    @param  date  - 日
+    """
+    name = ""
 
-    def get_url(self):
-        return self._url
+    def __init__(self, year, month, date):
+        self.file_path = "{0}_{1}.json".format(year, month)
+        self.year = year
+        self.month = month
+        self.date = date
+        self.param = {}
 
-    def set_url(self, url):
-        self._url = url
-
-    def del_url(self):
-        del self._urlA
-
-    url = property(get_url, set_url, del_url, "url property")
-
-    def get_date(self, date):
-        import datetime
-        if date == "today":
-            return datetime.datetime.today()
-        elif date == "yesturday":
-            return datetime.datetime.today() - datetime.timedelta(days=1)
-        else:
-            return datetime.datetime.today() + datetime.timedelta(days=1)
-
-    def set_path(self):
+    def add(self, title, complete):
         pass
 
-    def get_json(self, param, path, params={}):
-        import requests
-        response = requests.get(
-                self.url + path,
-                params)
-        self.json2 = response.json()
+    def remove(self, id):
+        pass
 
-    def request(self, type, params={}):
-        import requests
-        response = requests.get(
-                "http://127.0.0.1:8000/todo/title",
-                params)
-        self.json = response.json()
-         
+    def update(self, id):
+        pass
 
-def test_file_open():
-    f = open("hello.py")
-    line = f.readline()
-    while line:
-        line = f.readline()
-    f.close()
+    def list(self, date):
+        pass
 
 
 class Todo(Speed):
-    '''
-    Todo:
-    '''
-    base_url = "todo/"
+    """
+    class Todo
+    @param  year  - 年
+    @param  month - 月
+    @param  date  - 日
+    """
+    name = "todo"
 
-    def __init__(self):
-        print("this is todo...")
+    def __init__(self, year, month, date):
+        super(Todo, self).__init__(year, month, date)
+        from tinydb import TinyDB, Query
+        db = TinyDB(self.file_path)
+        self.table = db.table("todos")
+        self.query = Query()
 
-    def get_list(self, date="today"):
+    def add(self, title, complete):
+        self.table.insert({"title": title, "complete": complete, "date": "{0}日".format(self.date)})
+
+    def remove(self, id):
         pass
 
-    def set_path(self, path):
-        self.path = self.base_url + path
-
-    def get_json(self, param, path, params={}):
-        super(Todo, self).get_json(param, path, params)
-
-    def setup_ui(self):
+    def update(self, id):
         pass
+
+    def list(self):
+        res = self.table.search(self.query.date == "{0}日".format(self.date))
+        print(" ---- ", "{0}年{1}月{2}日".format(self.year, self.month, self.date), " ---- ")
+        for it in res:
+            check = '| [x] |' if it['complete'] else '| [ ] |'
+            print(check, it['title'])
 
 
 class Memo(Speed):
-    '''
-    Memo:
-    '''
-    def __init__(self):
-        pass
+    """
+    class Memo
+    """
+    pass
 
 
 class Diary(Speed):
-    '''
-    Diary:
-    '''
-    def __init__(self):
-        pass
-
-
-
+    """
+    class Diary
+    """
+    pass
