@@ -114,6 +114,12 @@ python3 << endpython3
 import calendar
 import datetime
 import vim
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow
+
+window = QMainWindow()
+window.statusBar()
+window.show()
 
 d = datetime.datetime.today()
 print(d.year)
