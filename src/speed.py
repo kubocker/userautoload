@@ -31,6 +31,9 @@ class Speed(object):
     def all(self):
         pass
 
+    def post(self):
+        pass
+
 
 class Todo(Speed):
     """
@@ -93,6 +96,10 @@ class Todo(Speed):
 
     def all(self):
         print(" ------------- ", "{0}年{1}月: Todo".format(self.year, self.month), " ------------- ")
+        for it in self.table.all():
+            day = ' {0} '.format(it['date'])
+            check = '| [x] |' if it['complete'] else '| [ ] |'
+            print(day, check, it['title'])
 
 
 class Memo(Speed):

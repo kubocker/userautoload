@@ -38,6 +38,8 @@ if option == "list":
     t.list()
 elif option == "add":
     t.add(lists[3], False)
+elif option == "all":
+    t.all()
 
 endpython3
 " ------------ python // -------------
