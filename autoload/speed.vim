@@ -4,6 +4,7 @@ py3file <sfile>:h:h/src/speed.py
 
 let g:type_list = ["todo", "memo", "diary"]
 
+let g:option_list = ["list", "add", "remove", "update", "all"]
 
 " ========== Todo ========== "
 function! SpeedTodo(...)
@@ -20,6 +21,7 @@ lists  = vim.eval("a:2")[0]
 
 today = datetime.datetime.today()
 t = None
+# 
 if len(lists) == 0:
     t = Todo(today.year, today.month, today.day)
 elif len(lists) == 1:
@@ -34,6 +36,7 @@ elif len(lists) == 2:
 elif len(lists) == 3 or len(lists) == 4:
     t = Todo(int(lists[0]), int(lists[1]), int(lists[2]))
 
+#
 if option == "list":
     t.list()
 elif option == "add":
