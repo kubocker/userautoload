@@ -1,3 +1,6 @@
+import os
+
+PATH = ""
 
 
 class Speed(object):
@@ -10,7 +13,7 @@ class Speed(object):
     name = ""
 
     def __init__(self, year, month, date):
-        self.file_path = "{0}_{1}.json".format(year, month)
+        self.file_path = "{year}_{month}.json".format(year=year, month=month)
         self.year = year
         self.month = month
         self.date = date
@@ -48,7 +51,7 @@ class Todo(Speed):
     def __init__(self, year, month, date=1):
         super(Todo, self).__init__(year, month, date)
         from tinydb import TinyDB, Query
-        db = TinyDB(self.file_path)
+        db = TinyDB(PATH + self.file_path)
         self.table = db.table("todos")
         self.query = Query()
 
@@ -75,6 +78,7 @@ class Todo(Speed):
         """
         todos = self.__get_todo(date)
         self.table.insert({"title": title, "complete": complete, "date": "{0}日".format(todos[1])})
+        print("add!!")
 
     def remove(self, id):
         """ データの削除
@@ -98,7 +102,7 @@ class Todo(Speed):
     def all(self):
         print(" ------------- ", "{0}年{1}月: Todo".format(self.year, self.month), " ------------- ")
         for it in self.table.all():
-            day = ' {0} '.format(it['date'])
+            day = '0' + it['date'] if len(it['date']) == 2 else it['date']
             check = '| [x] |' if it['complete'] else '| [ ] |'
             title = it['title']
             print(day, check, title)

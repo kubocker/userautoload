@@ -6,15 +6,17 @@ let g:type_list = ["todo", "memo", "diary"]
 
 let g:option_list = ["list", "add", "remove", "update", "all"]
 
-let g:todo_json_path  = "~/Develop/kubocker/work/todo"
-let g:memo_json_path  = "~/Develop/kubocker/work/memo"
-let g:diary_json_path = "~/Develop/kubocker/work/diary"
+let g:speed_todo_path  = "Develop/kubocker/work/todo/"
+let g:speed_memo_path  = "Develop/kubocker/work/memo/"
+let g:speed_diary_path = "Develop/kubocker/work/diary/"
+
 
 " ========== Todo ========== "
 function! SpeedTodo(...)
 ":Go todo list
 ":Go todo list today
 ":Go todo list 2017 4
+let l:path = $HOME . '/' . g:speed_todo_path
 " ------------ // python -------------
 python3 << endpython3
 import vim
@@ -24,6 +26,7 @@ option = vim.eval("a:1")
 lists  = vim.eval("a:2")[0]
 
 today = datetime.datetime.today()
+PATH = vim.eval("l:path")
 t = None
 # 
 if len(lists) == 0:
