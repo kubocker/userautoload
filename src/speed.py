@@ -43,6 +43,7 @@ class Todo(Speed):
     @param  date  - 日
     """
     name = "todo"
+    path = ""
 
     def __init__(self, year, month, date=1):
         super(Todo, self).__init__(year, month, date)
@@ -99,7 +100,8 @@ class Todo(Speed):
         for it in self.table.all():
             day = ' {0} '.format(it['date'])
             check = '| [x] |' if it['complete'] else '| [ ] |'
-            print(day, check, it['title'])
+            title = it['title']
+            print(day, check, title)
 
 
 class Memo(Speed):

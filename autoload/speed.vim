@@ -6,6 +6,10 @@ let g:type_list = ["todo", "memo", "diary"]
 
 let g:option_list = ["list", "add", "remove", "update", "all"]
 
+let g:todo_json_path  = "~/Develop/kubocker/work/todo"
+let g:memo_json_path  = "~/Develop/kubocker/work/memo"
+let g:diary_json_path = "~/Develop/kubocker/work/diary"
+
 " ========== Todo ========== "
 function! SpeedTodo(...)
 ":Go todo list
