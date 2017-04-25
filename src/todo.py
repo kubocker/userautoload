@@ -21,33 +21,44 @@ class Speed(object):
     def list(self, date):
         pass
 
-
-class Todo(Speed):
-    name = "todo"
-
-    def __init__(self, year, month, date):
-        super(Todo, self).__init__(year, month, date)
-        from tinydb import TinyDB, Query
-        self.query = Query()
-        db = TinyDB(self.file_path)
-        self.table = db.table("todos")
-
-    def add(self, title, complete):
-        self.table.insert({"title": title, "complete": complete, "date": "{0}日".format(self.date)})
-
-    def remove(self, id):
+    def all(self):
         pass
 
-    def update(self, id):
-        pass
 
-    def list(self):
-        from tinydb import Query
-        res = self.table.search(self.query.date == "{0}日".format(self.date))
-        print(" ---- ", "{0}日".format(self.date), " ---- ")
-        for it in res:
-            check = '| [x] |' if it['complete'] else '| [ ] |'
-            print(check, it['title'])
+#class Todo(Speed):
+#    name = "todo"
+#
+#    def __init__(self, year, month, date):
+#        super(Todo, self).__init__(year, month, date)
+#        from tinydb import TinyDB, Query
+#        db = TinyDB(self.file_path)
+#        self.table = db.table("todos")
+#        self.query = Query()
+#
+#    @classmethod
+#    def create(cls, year, month):
+#        pass
+#
+#    def add(self, title, complete):
+#        self.table.insert({"title": title, "complete": complete, "date": "{0}日".format(self.date)})
+#
+#    def remove(self, id):
+#        pass
+#
+#    def update(self, id):
+#        pass
+#
+#    def list(self):
+#        res = self.table.search(self.query.date == "{0}日".format(self.date))
+#        print(" ------------- ", "{0}年{1}月{2}日: Todo".format(self.year, self.month, self.date), " ------------- ")
+#        for it in res:
+#            check = '| [x] |' if it['complete'] else '| [ ] |'
+#            print(check, it['title'])
+#
+#    def all(self):
+#        # print(self.table.all())
+#        print(" ------------- ", "{0}年{1}月: Todo".format(self.year, self.month), " ------------- ")
+#        # print([x['title'] for x in self.table.all()])
 
 
 class Memo(Speed):

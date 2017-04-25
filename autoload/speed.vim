@@ -5,20 +5,40 @@ py3file <sfile>:h:h/src/speed.py
 let g:type_list = ["todo", "memo", "diary"]
 
 
-
 " ========== Todo ========== "
 function! SpeedTodo(...)
-"
+":Go todo list
+":Go todo list today
+":Go todo list 2017 4
 " ------------ // python -------------
 python3 << endpython3
 import vim
-import Todo
+import datetime
 
-year  = vim.eval("a:1")
-month = vim.eval("a:2")
-day   = vim.eval("a:3")
+option = vim.eval("a:1")
+lists  = vim.eval("a:2")[0]
 
-todo = Todo(year, month, day)
+today = datetime.datetime.today()
+t = None
+if len(lists) == 0:
+    t = Todo(today.year, today.month, today.day)
+elif len(lists) == 1:
+    if lists[0] == "today":
+        t = Todo(today.year, today.month, today.day)
+    elif lists[0] == "yesterday":
+        t = Todo(today.year, today.month, today.day-1)
+    elif lists[0] == "tomorrow":
+        t = Todo(today.year, today.month, today.day+1)
+elif len(lists) == 2:
+    pass
+elif len(lists) == 3 or len(lists) == 4:
+    t = Todo(int(lists[0]), int(lists[1]), int(lists[2]))
+
+if option == "list":
+    t.list()
+elif option == "add":
+    t.add(lists[3], False)
+
 endpython3
 " ------------ python // -------------
 "
@@ -72,7 +92,7 @@ function! Go(type, param, ...)
     "endif
     for item in list
         if l:type == item
-            call Go#SpeedUp(a:type, a:param, a:000)
+            call SpeedUp(a:type, a:param, a:000)
         endif
     endfor
 python3 << endpython3

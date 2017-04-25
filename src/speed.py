@@ -28,6 +28,9 @@ class Speed(object):
     def list(self, date):
         pass
 
+    def all(self):
+        pass
+
 
 class Todo(Speed):
     """
@@ -38,28 +41,58 @@ class Todo(Speed):
     """
     name = "todo"
 
-    def __init__(self, year, month, date):
+    def __init__(self, year, month, date=1):
         super(Todo, self).__init__(year, month, date)
         from tinydb import TinyDB, Query
         db = TinyDB(self.file_path)
         self.table = db.table("todos")
         self.query = Query()
 
-    def add(self, title, complete):
-        self.table.insert({"title": title, "complete": complete, "date": "{0}日".format(self.date)})
+    def __get_todo(self, date):
+        import datetime
+        today = datetime.datetime.today().day
+        day = 0
+        if date == "today":
+            day = today
+        elif date == "yesterday":
+            day = today - 1
+        elif date == "tomorrow":
+            day = today + 1
+        else:
+            day = self.date
+        res = self.table.search(self.query.date == "{0}日".format(day))
+        return res, day
+
+    def add(self, title, complete, date=""):
+        """ データの挿入
+        @param title
+        @param complete
+        @param date
+        """
+        todos = self.__get_todo(date)
+        self.table.insert({"title": title, "complete": complete, "date": "{0}日".format(todos[1])})
 
     def remove(self, id):
+        """ データの削除
+        @param id
+        """
         pass
 
     def update(self, id):
+        """ データの更新
+        @param id
+        """
         pass
 
-    def list(self):
-        res = self.table.search(self.query.date == "{0}日".format(self.date))
-        print(" ---- ", "{0}年{1}月{2}日".format(self.year, self.month, self.date), " ---- ")
-        for it in res:
+    def list(self, date=""):
+        todos = self.__get_todo(date)
+        print(" -------------- ", "{0}年{1}月{2}日".format(self.year, self.month, todos[1]), " -------------- ")
+        for it in todos[0]:
             check = '| [x] |' if it['complete'] else '| [ ] |'
             print(check, it['title'])
+
+    def all(self):
+        print(" ------------- ", "{0}年{1}月: Todo".format(self.year, self.month), " ------------- ")
 
 
 class Memo(Speed):
