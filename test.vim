@@ -15,9 +15,10 @@ t.love()
 endpython3
 endfunction
 
+py3file <sfile>:h:h/cute.py/app.py
 
 let res = webapi#http#get('http://127.0.0.1:8000/youtube/artist/')
-"let res = webapi#http#post('http://127.0.0.1:8000/youtube/artist/', {'name': 'マンコ大好き結成隊', 'foundation_date': '2016-03-13', 'member': 3})
+"let res = webapi#http#post('http://127.0.0.1:8000/youtube/artist/', {'name': '音楽好きな結成隊', 'foundation_date': '2016-03-13', 'member': 3})
 let content = webapi#json#decode(res.content)
 echo content
 
@@ -200,3 +201,20 @@ endfunction
 
 call s:apply("s:print", 0, "hoge", "youtube")
 call s:apply("s:sum", 2, 3, 6, 1)
+
+
+function! Cute()
+python3 << endpython3
+print("ssss")
+import vim
+import sys
+from PyQt5.QtWidgets import QMainWindow, QApplication
+
+window = QMainWindow()
+window().statusBar()
+window().setGeometry(500,500,500,500)
+window().show()
+app = QApplication(sys.argv)
+sys.exit(app.exec_())
+endpython3
+endfunction
