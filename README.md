@@ -17,7 +17,7 @@ or
 
 #### git clone
 ```bash
-$
+$ git clone https://github.com/kubocker/userautoload
 ```
 
 ## 2. set
